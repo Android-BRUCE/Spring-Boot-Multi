@@ -1,0 +1,72 @@
+server:
+  port: 8085
+spring:
+  datasource:
+# jdbc_config   datasource
+    url: jdbc:mysql://localhost:3306/girl?characterEncoding=utf8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+#druid_config
+    max-active: 20
+    initial-size: 1
+    min-idle: 3
+    max-wait: 60000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    poolPreparedStatements: true
+    filters: stat,wall,slf4j
+#redis
+  redis:
+    host: 127.0.0.1
+    port: 6378
+    password: qianwangwanjia2017
+    timeout: 0
+    database: 0
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+# mybatis_config
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.highcharts.shiro.domain
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+  mvc:
+    view:
+      prefix: /
+        # 响应页面默认后缀
+      suffix: .html
+  thymeleaf:
+    cache: false
+    #thymeleaf start
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    #thymeleaf end
+
+  freemarker:
+    allow-request-override: false
+    cache: true
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+
+
+
+

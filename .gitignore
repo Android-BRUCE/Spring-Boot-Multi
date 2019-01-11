@@ -1,0 +1,18 @@
+*/target
+*/.idea'.idea''.idea'
+# Others
+.idea/
+*.iml
+
+.gradle
+/.idea/workspace.xml
+.DS_Store
+/build
+/capture
+
+#local
+*/out/
+logs/
+multi-module-syn/src/test/
+/*/target/
+/*/*/target/

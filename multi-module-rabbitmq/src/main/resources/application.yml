@@ -1,0 +1,14 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: spring-boot-rabbitmq
+  rabbitmq:
+    host: 118.178.253.131
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirms: true
+    virtual-host: /
+  profiles:
+    active: dev

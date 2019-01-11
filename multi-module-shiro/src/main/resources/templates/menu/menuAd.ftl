@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统 - 内容页</title>
+    <link href="${basePath}/static/css/content-base.css" rel="stylesheet"/>
+    <link href="${basePath}/static/css/jqgrid/ui.jqgrid.css" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>菜单管理</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="form-group">
+                <button id="btnAdd" type="button" class="btn btn-primary "
+                        onclick="addModel()">
+                    <i class="fa fa-plus"></i>&nbsp;添加
+                </button>
+                <button id="btnEdit" type="button" class="btn btn-info "
+                        onclick="editModel()">
+                    <i class="fa fa-pencil"></i> 编辑
+                </button>
+                <button id="btnDel" type="button" class="btn btn-danger "
+                        onclick="delData()">
+                    <i class="fa fa-remove"></i>&nbsp;&nbsp;<span class="bold">删除</span>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="txtSearchKey" type="text" class="input form-control"
+                           placeholder="输入菜单名模糊搜索"/>
+                    <span class="input-group-btn">
+                    <button id="btnSearch" class="btn btn btn-primary" type="button">
+                        <i class="fa fa-search"></i> 搜索
+                    </button>
+                </span>
+                </div>
+            </div>
+
+            <div class="jqGrid_wrapper">
+                <table id="table_list"></table>
+                <div id="pager_list"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="${basePath}/static/js/content/base.js"></script>
+
+
+<script src="${basePath}/static/js/content/list.js"></script>
+
+<script>
+    function addModel() {
+        $("#btnAdd").button("loading");
+        window.location.href = "${basePath}/sysMenu/editPage/add/";
+    }
+
+    function editModel() {//编辑
+        var row = JucheapGrid.GetData();
+        if (row != null) {
+            $("#btnEdit").button("loading");
+            window.location.href = "${basePath}/sysMenu/editPage/" + row.sysMenuId;
+        } else {
+            parent.layer.alert("请选择要编辑的数据");
+        }
+    }
+
+    function delData() {//删除
+        XPage.DelData("${basePath}/sysMenu/delete");
+    }
+
+    function searchData() {//搜索
+        var json = {
+            keywords: $("#txtSearchKey").val()
+        };
+        XPage.Search(json);
+    }
+
+    $(document).ready(function () {
+        var config = {
+            title: '列表',
+            url: '${basePath}/sysMenu/getListWithPager',
+            colNames: ['主键', '菜单名', '菜单链接', '父级菜单'],
+            colModel: [{
+                name: 'sysMenuId',
+                index: 'sysMenuId',
+                width: 60,
+                key: true,
+                hidden: true
+            },
+                {
+                    name: 'sysMenuName',
+                    index: 'sysMenuName',
+                    width: 60
+                }, {
+                    name: 'sysMenuUrl',
+                    index: 'sysMenuUrl',
+                    width: 60
+                }, {
+                    name: 'sys_parent',
+                    index: 'sys_parent',
+                    formatter: formateMenuIsParent,
+                    width: 60
+                }
+            ]
+        };
+        JucheapGrid.Load(config);
+        $("#btnSearch").bind("click", searchData);
+    });
+
+    if ('${edit!'123'}' == 'false') {
+        parent.layer.msg('保存失败，请重试！', {icon: 5, anim: 6, offset: 't'});
+    }
+    if ('${edit!'123'}' == 'true') {
+        parent.layer.msg('保存成功！', {icon: 6, anim: 6, offset: 't'});
+    }
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.highcharts.shiro.mapper.SysMenuMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.highcharts.shiro.entity.SysMenu">
+		<id column="sys_menu_id" property="sysMenuId" />
+		<result column="sys_menu_name" property="sysMenuName" />
+		<result column="sys_menu_url" property="sysMenuUrl" />
+		<result column="sys_parent" property="sys_parent" />
+		<result column="sys_menu_sort" property="sys_menu_sort" />
+	</resultMap>
+
+
+	<select id="seleMenuByRoleId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT  sm.`sys_menu_id`,sm.`sys_menu_name`,sm.`sys_menu_url`,sm.`sys_parent`,sm.`sys_menu_sort`  FROM sys_menu AS sm,sys_menu_role AS smr WHERE sm.`sys_menu_id`=smr.`sys_menu_id` AND smr.`sys_role_id`=#{rid}
+		 order by sm.sys_menu_sort asc
+	</select>
+</mapper>
